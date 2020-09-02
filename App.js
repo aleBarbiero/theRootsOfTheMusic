@@ -5,13 +5,15 @@ import Home from './pages/Home';
 import Lista from './pages/Lista';
 import Categorie from './pages/Categorie';
 import Scalette from './pages/Scalette';
+import Canzone from './pages/Canzone';
 import {ElementProvider} from './context';
 
 const Stack = createStackNavigator();
 
+console.disableYellowBox = true;
+
 function NavStack() {
   return (
-    //<ElementProvider>
       <Stack.Navigator
         screenOptions={{
           headerTitleAlign: 'center',
@@ -21,7 +23,8 @@ function NavStack() {
           },
           headerTintColor: '#fff',
           headerTitleStyle :{
-            fontWeight: 'bold',
+            fontSize: 25,
+            fontFamily: "Roboto"
           },
         }}
       >
@@ -36,24 +39,29 @@ function NavStack() {
           options={{ title: 'Scalette' }}
         />
         <Stack.Screen 
-          name="Lista canzoni" 
+          name="Canzoni" 
           component={Lista} 
-          options={{ title: 'Lista canzoni' }}
+          options={{ title: 'Cerca una canzone' }}
         />
         <Stack.Screen
           name="Categorie"
           component={Categorie}
-          options={{title:"Categorie"}}
+          options={{title:"Lista categorie"}}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Canzone"
+          component={Canzone}
         ></Stack.Screen>
       </Stack.Navigator>
-    //</ElementProvider>
   )
 }
 
 export default function App() {
   return ( 
-    <NavigationContainer>
-      <NavStack></NavStack>
-    </NavigationContainer>
+    <ElementProvider>
+      <NavigationContainer>
+        <NavStack></NavStack>
+      </NavigationContainer>
+    </ElementProvider>
   );
 }
