@@ -29,7 +29,8 @@ export default class ElementProvider extends Component {
         this.state = {
             songs: [],
             lineups: [],
-            sortedSongs: []
+            sortedSongs: [],
+            categories: []
         }
     }//constructor
 
@@ -45,8 +46,18 @@ export default class ElementProvider extends Component {
                 return doc.data();
             })
             this.setState({songs: tempSongs,sortedSongs: tempSongs});
+            let categories = this.getCategories(tempSongs);
+            this.setState({categories});
         })  
     }//getData
+
+    getCategories = (songs) => {
+        let toReturn=new Set();
+        songs.map(song => {
+            return song.tags.map(item => toReturn.add(item));
+        });
+        return Array.from(toReturn).sort();
+    }//getCategories
 
     sort = (param) => {
         let tempSongs = [];
