@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {View,Text} from 'react-native';
+import {ScrollView,View,Text,StyleSheet} from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
-import {ElementContext} from '../context'
+import {ElementContext} from '../context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Categorie extends Component{
 
@@ -22,17 +23,27 @@ export default class Categorie extends Component{
 
     renderHeader = section => {
         return (
-        <View>
-            <Text>{section.title}</Text>
+        <View style={styles.header}>
+            <Text style={styles.title}>{section.title}</Text>
         </View>
         );
     };
 
     renderContent = section => {
         return (
-        <View>
-            <Text>{section.content.title}</Text>
-        </View>
+            <View>
+                {
+                    section.content.map(item => {
+                        return (
+                            <View style={styles.item}>
+                                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation})}>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    })
+                }
+            </View>
         );
     };
 
@@ -59,14 +70,61 @@ export default class Categorie extends Component{
             }
         })
         return (
-        <Accordion
-            sections={SECTIONS}
-            activeSections={this.state.activeSections}
-            renderSectionTitle={this.renderSectionTitle}
-            renderHeader={this.renderHeader}
-            renderContent={this.renderContent}
-            onChange={this.updateSections}
-        />
+            <ScrollView>
+                <Accordion
+                    sections={SECTIONS}
+                    activeSections={this.state.activeSections}
+                    renderSectionTitle={this.renderSectionTitle}
+                    renderHeader={this.renderHeader}
+                    renderContent={this.renderContent}
+                    onChange={this.updateSections}
+                    underlayColor="#fff"
+                />
+            </ScrollView>
+        
         );
     }
 }
+
+const styles = StyleSheet.create({
+    item: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderStyle: "solid",
+        borderColor: "#ff8a01",
+        borderRadius: 15,
+        borderWidth: 1,
+        margin: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+        elevation: 11
+    },
+    title: {
+      fontSize: 30,
+      color: "#222",
+      fontFamily: "Roboto",
+      fontWeight: "normal",
+      alignSelf: "center"
+    },
+    header: {
+        backgroundColor: '#ff8a01',
+        padding: 20,
+        borderStyle: "solid",
+        borderColor: "#222",
+        borderWidth: 1,
+        marginBottom: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+        elevation: 11
+    }
+});

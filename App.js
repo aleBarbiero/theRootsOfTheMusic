@@ -6,6 +6,7 @@ import Lista from './pages/Lista';
 import Categorie from './pages/Categorie';
 import Scalette from './pages/Scalette';
 import Canzone from './pages/Canzone';
+import Scaletta from './pages/Scaletta';
 import {ElementProvider} from './context';
 
 const Stack = createStackNavigator();
@@ -25,7 +26,7 @@ function NavStack() {
           headerTitleStyle :{
             fontSize: 25,
             fontFamily: "Roboto"
-          },
+          }
         }}
       >
         <Stack.Screen 
@@ -51,6 +52,10 @@ function NavStack() {
         <Stack.Screen
           name="Canzone"
           component={Canzone}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Scaletta"
+          component={Scaletta}
         ></Stack.Screen>
       </Stack.Navigator>
   )

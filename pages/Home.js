@@ -10,7 +10,7 @@ function Home({navigation}){
                         width:200,
                         marginTop: -10,
                     }}>
-                <Button title="Scalette" color="#ff8a01"></Button>
+                <Button title="Scalette" color="#ff8a01" onPress={() => navigation.navigate("Scalette",{navigation: navigation})}></Button>
             </TouchableHighlight>
             <TouchableHighlight style={{
                 width: 200,
@@ -22,7 +22,7 @@ function Home({navigation}){
                 width: 200,
                 marginTop: 25
             }}>
-                <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie")}></Button>
+                <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie",{navigation: navigation})}></Button>
             </TouchableHighlight>
         </View>
     );

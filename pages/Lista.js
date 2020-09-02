@@ -27,7 +27,7 @@ class Lista extends Component {
         const {clear} = this.context;
         const renderItem = ({item}) => (
             <View style={styles.item}>
-                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: item,navigation: this.props.navigation})}>
+                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation})}>
                     <Text style={styles.title}>{item.title}</Text>
                 </TouchableOpacity>
             </View>
@@ -56,7 +56,6 @@ class Lista extends Component {
                     this.state.searchTerm === "" ? <FlatList data={songs} renderItem={renderItem} keyExtractor={item => item.title}/> :
                         sortedSongs.length > 0 ? <FlatList data={sortedSongs} renderItem={renderItem} keyExtractor={item => item.title}/> : <View></View>
                 }
-                
             </>
         )
     }
@@ -87,6 +86,6 @@ const styles = StyleSheet.create({
       fontWeight: "normal",
       alignSelf: "center"
     },
-  });
+});
 
 export default Lista;
