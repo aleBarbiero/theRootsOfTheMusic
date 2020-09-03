@@ -24,7 +24,7 @@ export default class Scaletta extends Component {
                     <Text style={styles.title}>{id.toUpperCase()}</Text>
                 </View>
                 <View style={styles.item}>
-                    <TouchableOpacity key={index.name-id} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: song.id,title: song.title},navigation: this.props.navigation})}>
+                    <TouchableOpacity key={index.name-id} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: song.id,title: song.title},navigation: this.props.navigation,isSmartphone: this.props.route.params.isSmartphone})}>
                         <Text style={styles.element}>{song.title}</Text>
                     </TouchableOpacity>
                 </View>

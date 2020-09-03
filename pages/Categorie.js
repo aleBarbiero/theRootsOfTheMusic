@@ -36,7 +36,7 @@ export default class Categorie extends Component{
                     section.content.map(item => {
                         return (
                             <View style={styles.item}>
-                                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation})}>
+                                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation,isSmartphone: this.props.route.params.isSmartphone})}>
                                     <Text style={styles.title}>{item.title}</Text>
                                 </TouchableOpacity>
                             </View>

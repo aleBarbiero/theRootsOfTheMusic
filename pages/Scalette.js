@@ -15,7 +15,7 @@ class Scalette extends Component {
         let {lineups} = this.context.state;
         const renderItem = ({item}) => (
             <View style={styles.item}>
-                <TouchableOpacity key={item.name} onPress={() => this.props.navigation.navigate("Scaletta",{element: item,navigation: this.props.navigation})}>
+                <TouchableOpacity key={item.name} onPress={() => this.props.navigation.navigate("Scaletta",{element: item,navigation: this.props.navigation,isSmartphone: this.props.route.params.isSmartphone})}>
                     <Text style={styles.title}>{item.name}</Text>
                 </TouchableOpacity>
             </View>

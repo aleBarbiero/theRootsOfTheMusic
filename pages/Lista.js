@@ -12,7 +12,7 @@ class Lista extends Component {
             searchTerm: ""
         }
     } 
-
+    
     updateText = (searchTerm) => {
         const {sort} = this.context;
         this.setState({searchTerm});
@@ -27,7 +27,7 @@ class Lista extends Component {
         const {clear} = this.context;
         const renderItem = ({item}) => (
             <View style={styles.item}>
-                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation})}>
+                <TouchableOpacity key={item.title} onPress={() => this.props.navigation.navigate("Canzone",{element: {id: item.id,title: item.title},navigation: this.props.navigation,isSmartphone: this.props.route.params.isSmartphone})}>
                     <Text style={styles.title}>{item.title}</Text>
                 </TouchableOpacity>
             </View>
