@@ -7,6 +7,7 @@ import Categorie from './pages/Categorie';
 import Scalette from './pages/Scalette';
 import Canzone from './pages/Canzone';
 import Scaletta from './pages/Scaletta';
+import Forms from './pages/Forms';
 import {ElementProvider} from './context';
 
 const Stack = createStackNavigator();
@@ -56,6 +57,11 @@ function NavStack() {
         <Stack.Screen
           name="Scaletta"
           component={Scaletta}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Forms"
+          component={Forms}
+          options={{title:"Aggiungi nuovo"}}
         ></Stack.Screen>
       </Stack.Navigator>
   )

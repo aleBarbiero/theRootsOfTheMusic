@@ -147,7 +147,7 @@ export default class ElementProvider extends Component {
     }//findSong
 
     addSong = () => {
-
+        
     }//addSong
 
     addLineup = () => {

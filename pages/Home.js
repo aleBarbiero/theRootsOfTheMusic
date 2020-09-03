@@ -3,6 +3,21 @@ import { Button, View, TouchableHighlight, Image,Text} from 'react-native';
 import {StyleSheet} from 'react-native';
 import '@expo/match-media';
 import {useMediaQuery} from 'react-responsive';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+action = (navigation) => {
+    return(
+        <ActionButton buttonColor="rgba(34, 34, 34, 1)" offsetY={0}>
+            <ActionButton.Item buttonColor='#ff8a01' title="Nuova canzone" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: true})}>
+                <Icon name="md-musical-note" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor='#ff8a01' title="Nuova scaletta" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: false})}>
+                <Icon name="md-list" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+        </ActionButton>        
+    )
+}
 
 function Home({navigation}){
 
@@ -45,6 +60,7 @@ function Home({navigation}){
                 }}>
                     <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
+                {this.action(navigation)}
             </View>
         );
     }else if(isMedium){
@@ -69,6 +85,7 @@ function Home({navigation}){
                 }}>
                     <Text onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.mediumText}>Categorie</Text>
                 </TouchableHighlight>
+                {this.action()}
             </View>
         )
     }else{
@@ -93,6 +110,7 @@ function Home({navigation}){
                 }}>
                     <Text onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.tabletText}>Categorie</Text>
                 </TouchableHighlight>
+                {this.action()}
             </View>
         )
     }
@@ -129,5 +147,10 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         color: "#fff",
         width: 300
-    }
+    },
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white'
+      },
 });
