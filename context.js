@@ -146,9 +146,18 @@ export default class ElementProvider extends Component {
         return toReturn;
     }//findSong
 
+    addSong = () => {
+
+    }//addSong
+
+    addLineup = () => {
+
+    }//addLineup
+
     render() {
         return (
-            <ElementContext.Provider value={{state: this.state,sort: this.sort,clear: this.clear,findSong: this.findSong}}>
+            <ElementContext.Provider value={{state: this.state,sort: this.sort,clear: this.clear,
+            findSong: this.findSong,addSong: this.addSong,addLineup: this.addLineup}}>
                 {this.props.children}
             </ElementContext.Provider>
         )

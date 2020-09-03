@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import {ScrollView,Text,StyleSheet} from 'react-native';
-import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
-import {ElementContext} from "../context"
+import {ScrollView,Text,StyleSheet,View} from 'react-native';
+import {ElementContext} from "../context";
 
 export default class Canzone extends Component {
 
     constructor(props){
         super(props);
         this.props.navigation.setOptions({title: this.props.route.params.element.title})
+        const {isSmartphone} = this.props.route.params;
         this.state = {
-            size: 15
+            size: isSmartphone
         }
     }//constructor
 
@@ -25,36 +25,26 @@ export default class Canzone extends Component {
         let element = findSong(id);
         let rit = false;
         return (   
-            <ReactNativeZoomableView
-                maxZoom={1.5}
-                minZoom={1}
-                zoomStep={0.2}
-                initialZoom={1}
-                bindToBorders={true}
-                onZoomAfter={this.logOutZoomState}
-                style={styles.scrollView}
-            >
-                <ScrollView >
-                    {
-                        element.text.map((item,index) => {
-                            if(item === "-RIT-"){
-                                rit=!rit;
-                            return <Text key={index}>{}</Text>
-                            }
-                            if(!rit)
-                                return <Text style={{
-                                    lineHeight: this.state.size,
-                                    fontSize: this.state.size}} key={index}>{item}{"\n"}</Text>;
-                            else
-                                return <Text style={{
-                                    fontWeight: "bold",
-                                    color: "#ff8a01",
-                                    fontSize: this.state.size+2,
-                                    lineHeight: this.state.size+2}} key={index}>{item}{"\n"}</Text>;
-                        })
-                    } 
-                    </ScrollView>
-            </ReactNativeZoomableView>
+            <ScrollView style={styles.scrollView}>
+                {
+                    element.text.map((item,index) => {
+                        if(item === "-RIT-"){
+                            rit=!rit;
+                        return <Text key={index}>{}</Text>
+                        }
+                        if(!rit)
+                            return <Text style={{
+                                lineHeight: this.state.size,
+                                fontSize: this.state.size}} key={index}>{item}{"\n"}</Text>;
+                        else
+                            return <Text style={{
+                                fontWeight: "bold",
+                                color: "#ff8a01",
+                                fontSize: this.state.size+2,
+                                lineHeight: this.state.size+2}} key={index}>{item}{"\n"}</Text>;
+                    })
+                } 
+            </ScrollView>
         )
     }//render
 
