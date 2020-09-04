@@ -3,7 +3,6 @@ import {ElementContext} from '../context';
 import {ScrollView,View,Text,StyleSheet,TouchableHighlight,Button} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Textarea from 'react-native-textarea';
-import {Picker} from '@react-native-community/picker';
 
 export default class Forms extends Component {
 
@@ -69,20 +68,10 @@ export default class Forms extends Component {
                 </ScrollView>
             )
         }else{
-            let {songs} = this.context.state;
+            
             return (
                 <ScrollView>
-                    <TextInput onChangeText={text => this.setState({name: text})} style={styles.formLineup}></TextInput>
-                    <Text style={styles.title}>Inizio</Text>
-                    <Picker
-                        onValueChange={(value) => this.setState({inizio: value})}
-                        selectedValue={this.state.inizio}>
-                        {
-                            songs.map(item => {
-                                return <Picker.Item label={item.title} value={item.id}></Picker.Item>
-                            })
-                        }    
-                    </Picker>
+                   
                 </ScrollView>
             )
         }

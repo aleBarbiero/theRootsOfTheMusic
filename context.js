@@ -11,12 +11,6 @@ export default class ElementProvider extends Component {
 
     constructor(){
         super();
-        /*dbh.collection("songs").doc(title.toLowerCase().replace(" ","")).set({
-            title: title,
-            tags: tags,
-            text: text.split("\n")    
-        })*/
-
         this.state = {
             songs: [],
             lineups: [],
@@ -146,8 +140,19 @@ export default class ElementProvider extends Component {
         return toReturn;
     }//findSong
 
-    addSong = () => {
-        
+    addSong = (title,text,cats) => {
+        let tags = cats.split("\n");
+        tags.map((tag,index) => {
+            tags[index] = tag.charAt(0).toUpperCase() + tag.slice(1);
+        })
+        let id = title.toLowerCase().replace(/ /g,'');
+        let fullText=text.replace(/"/g, '"').split("\n");
+        dbh.collection("songs").doc(id).set({
+            id: id,
+            title: title,
+            tags: tags,
+            text: fullText,    
+        })
     }//addSong
 
     addLineup = () => {
