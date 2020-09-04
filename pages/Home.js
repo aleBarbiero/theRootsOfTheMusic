@@ -1,10 +1,14 @@
 import React from 'react';
-import { Button, View, TouchableHighlight, Image,Text} from 'react-native';
+import { Button,ScrollView, View, TouchableHighlight, Image,Text} from 'react-native';
 import {StyleSheet} from 'react-native';
 import '@expo/match-media';
 import {useMediaQuery} from 'react-responsive';
 
 function Home({navigation}){
+
+    const isVerySmall = useMediaQuery({
+        maxDeviceWidth: 350
+    })
 
     const isSmall = useMediaQuery({
         maxDeviceWidth: 500
@@ -16,36 +20,69 @@ function Home({navigation}){
 
     var isSmartphone;
 
-    if(isSmall)
+    if(isVerySmall)
+        isSmartphone = 13;
+    else if(isSmall)
         isSmartphone = 16;
     else if(isMedium)
         isSmartphone = 30;
     else 
         isSmartphone = 40;
 
-    if(isSmall){
-        return (
-            <View style={styles.view}>
-                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.6}], margin: -20}}></Image>
+    if(isVerySmall){
+        return(
+            <ScrollView>
+                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.4}], margin: -100,alignSelf: "center"}}></Image>
                 <TouchableHighlight style={{
                             width:200,
                             marginTop: -10,
+                            alignSelf: "center"
                         }}>
                     <Button title="Scalette" color="#ff8a01" onPress={() => navigation.navigate("Scalette",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 200,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Button title="Canzoni" color="#ff8a01" onPress={() => navigation.navigate("Canzoni",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 200,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
+        )
+    }else if(isSmall){
+        return (
+            <ScrollView>
+                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.6}], margin: -50,alignSelf: "center"}}></Image>
+                <TouchableHighlight style={{
+                            width:200,
+                            marginTop: -2,
+                            alignSelf: "center"
+                        }}>
+                    <Button title="Scalette" color="#ff8a01" onPress={() => navigation.navigate("Scalette",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
+                </TouchableHighlight>
+                <TouchableHighlight style={{
+                    width: 200,
+                    marginTop: 25,
+                    alignSelf: "center"
+                }}>
+                    <Button title="Canzoni" color="#ff8a01" onPress={() => navigation.navigate("Canzoni",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
+                </TouchableHighlight>
+                <TouchableHighlight style={{
+                    width: 200,
+                    marginTop: 25,
+                    marginBottom: 2,
+                    alignSelf: "center"
+                }}>
+                    <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
+                </TouchableHighlight>
+            </ScrollView>
         );
     }else if(isMedium){
         return (

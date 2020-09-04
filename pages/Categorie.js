@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
       color: "#222",
       fontFamily: "Roboto",
       fontWeight: "normal",
-      alignSelf: "center"
+      alignSelf: "center",
+      textAlign: "center"
     },
     header: {
         backgroundColor: '#ff8a01',
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.36,
         shadowRadius: 6.68,
-        elevation: 11
+        elevation: 11,
+        textAlign: "center"
     }
 });

@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "normal",
         alignSelf: "center",
-        marginTop: 3
+        marginTop: 3,
+        textAlign: "center"
     },
     item: {
         backgroundColor: '#fff',
