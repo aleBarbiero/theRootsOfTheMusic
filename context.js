@@ -153,10 +153,18 @@ export default class ElementProvider extends Component {
             tags: tags,
             text: fullText,    
         })
+        this.getData();
     }//addSong
 
-    addLineup = () => {
-
+    addLineup = (name,lineup) => {
+        let toAdd = {};
+        toAdd.name = name;
+        toAdd.id = name.replace(/ /g,'').replace(/\//g, '-').toLowerCase();
+        lineup.map(item => {
+            toAdd[item.id.toLowerCase()] = item.value;
+        })
+        dbh.collection("lineup").doc(toAdd.id).set(toAdd);
+        this.getData();
     }//addLineup
 
     render() {

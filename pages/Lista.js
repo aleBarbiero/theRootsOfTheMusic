@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
       color: "#222",
       fontFamily: "Roboto",
       fontWeight: "normal",
-      alignSelf: "center"
+      alignSelf: "center",
+      textAlign: "center"
     },
 });
 

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {ElementContext} from '../context';
-import {ScrollView,View,Text,StyleSheet,TouchableHighlight,Button} from 'react-native';
+import {ScrollView,View,Text,StyleSheet,TouchableHighlight,Button,TouchableOpacity} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Textarea from 'react-native-textarea';
+import Accordion from 'react-native-collapsible/Accordion';
+
+var parts = ["inizio","alleluia","offertorio","santo","comunione","fine"];
 
 export default class Forms extends Component {
 
@@ -16,13 +19,114 @@ export default class Forms extends Component {
             }
         }else{
             this.state = {
+                activeSections: [],
+                sections: [],
+                ligthSongs: [],
+                new: false,
+                title: "",
                 name: "",
-                inizio: ""
+                inizio: "...",
+                alleluia: "...",
+                offertorio: "...",
+                santo: "...",
+                comunione: "...",
+                fine: "..."
             }
         }
     }//constructor
 
     static contextType = ElementContext;
+
+    componentDidMount(){
+        let {songs} = this.context.state;
+        let ligthSongs = songs.map(item => {
+            return {
+                id: item.id,
+                title: item.title
+            }
+        })
+        let sections = parts.map(part => {
+            return {
+                title: part,
+                content: ligthSongs
+            }
+        })
+        this.setState({sections,ligthSongs});
+    }
+
+    renderSectionTitle = section => {
+        return (
+            <Text style={styles.title}>{section.title.toUpperCase()}</Text>
+        );
+    };
+
+    renderHeader = section => {
+        return (
+        <View style={styles.header}>
+            <Text style={styles.title}>{this.state[section.title] === "..." ? "..." : this.state.ligthSongs.find(song => {return song.id === this.state[section.title]}).title}</Text>
+        </View>
+        );
+    };
+
+    renderContent = section => {
+        return (
+            <View>
+                {
+                    section.content.map(item => {
+                        return (
+                            <View style={styles.item}>
+                                <TouchableOpacity key={item.title} onPress={() => {this.setState({[section.title]:item.id,activeSections: []})}}>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    })
+                }
+            </View>
+        );
+    };
+
+    updateSections = activeSections => {
+        this.setState({ activeSections });
+    };
+
+    addNew = () => {
+        if(this.state.new)
+            return(
+                <>
+                    <Text style={styles.title}>Titolo</Text>
+                    <TextInput onChangeText={text => this.setState({title: text})} style={styles.form}></TextInput>
+                    <View>
+                        <TouchableHighlight style={{
+                            padding: 10
+                        }}>
+                            <Button title="ANNULLA" color="#FF5233" onPress={() => {this.setState({new: false,title:""})}}></Button>
+                        </TouchableHighlight>
+                        
+                        <TouchableHighlight style={{
+                            padding: 10
+                        }}>
+                            <Button title="AGGIUNGI" color="#33FF7D" onPress={() => {this.pushItem()}}></Button>
+                        </TouchableHighlight>
+                    </View>
+                </>
+            );
+        else
+            return <></>
+    }//addNew
+
+    pushItem = () => {
+        if(this.state.title !== "" && !parts.includes(this.state.title)){
+            let newValue = this.state.title;
+            parts.push(newValue);
+            let tempSec = this.state.sections;
+            tempSec.push({
+                title: newValue,
+                content: this.state.ligthSongs
+            });
+            this.setState({new: false,title:"",[newValue]: "...",sections: tempSec});
+        }
+    }//pushItem
 
     addSong = () => {
         let {addSong} = this.context;
@@ -31,6 +135,25 @@ export default class Forms extends Component {
             this.props.navigation.navigate("Home");
         }
     }//addSong
+
+    addLineup = () => {
+        let {addLineup} = this.context;
+        let error = false;
+        if(this.state.name === "")
+            error = true;
+        let lineup = parts.map(part => {
+            if(this.state[part] === "...")
+                error=true;
+            return {
+                id: part,
+                value: this.state[part]
+            }
+        })
+        if(!error){
+            addLineup(this.state.name,lineup);
+            this.props.navigation.navigate("Home");
+        }
+    }//addLineup
 
     render() {
         if(this.props.route.params.type){
@@ -62,16 +185,44 @@ export default class Forms extends Component {
                             marginTop: 30,
                             backgroundColor: "#222"
                         }}>
-                        <Button title="Crea nuova canzone" color="#ff8a01" onPress={() => {this.addSong()}}></Button>
-                    </TouchableHighlight>
+                            <Button title="Crea nuova canzone" color="#ff8a01" onPress={() => {this.addSong()}}></Button>
+                        </TouchableHighlight>
                     </View>
                 </ScrollView>
             )
         }else{
-            
             return (
                 <ScrollView>
-                   
+                    <Text style={styles.title}>NOME</Text>
+                    <TextInput onChangeText={text => this.setState({name: text})} style={styles.form}></TextInput>
+                    <Accordion
+                        sections={this.state.sections}
+                        activeSections={this.state.activeSections}
+                        renderSectionTitle={this.renderSectionTitle}
+                        renderHeader={this.renderHeader}
+                        renderContent={this.renderContent}
+                        onChange={this.updateSections}
+                        underlayColor="#fff"
+                    />
+                    {
+                        this.addNew()
+                    }
+                    <TouchableHighlight style={{
+                        width: 200,
+                        margin: 25,
+                        alignSelf: "center" 
+                    }}>
+                        <Button title="+" color="#33FF7D" onPress={() => {this.setState({new: true})}}></Button>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={{
+                        width: 200,
+                        margin: 30,
+                        backgroundColor: "#222",
+                        alignSelf: "center"
+                    }}>
+                        <Button title="Crea nuova scaletta" color="#ff8a01" onPress={() => {this.addLineup()}}>
+                        </Button>
+                    </TouchableHighlight>
                 </ScrollView>
             )
         }
@@ -106,7 +257,8 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "normal",
         alignSelf: "center",
-        marginTop: 3
+        marginTop: 3,
+        textAlign: "center"
     },
     titleCat: {
         fontSize: 30,
@@ -114,6 +266,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "normal",
         alignSelf: "center",
+        textAlign: "center"
     },
     container: {
         flex: 1,
@@ -148,5 +301,38 @@ const styles = StyleSheet.create({
         height: 100,
         fontSize: 18,
         color: '#222',
+    },
+    item: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderStyle: "solid",
+        borderColor: "#ff8a01",
+        borderRadius: 15,
+        borderWidth: 1,
+        margin: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+        elevation: 11,
+    },
+    header: {
+        backgroundColor: '#ff8a01',
+        padding: 20,
+        borderStyle: "solid",
+        borderColor: "#222",
+        borderWidth: 1,
+        marginBottom: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+        elevation: 11
     }
-})
+});
