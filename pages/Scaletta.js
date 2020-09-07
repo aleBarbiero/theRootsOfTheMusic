@@ -3,8 +3,6 @@ import {ScrollView,View,Text,StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ElementContext } from '../context';
 
-const part = ["inizio","alleluia","offertorio","santo","comunione","fine"];
-
 export default class Scaletta extends Component {
 
     constructor(props){
@@ -17,7 +15,7 @@ export default class Scaletta extends Component {
     getPart = (id) => {
         let {findSong} = this.context;
         let index = this.props.route.params.element;
-        let song = findSong(index[id]);
+        let song = findSong(index[id].song);
         return(
             <>
                 <View style={styles.header}>
@@ -33,18 +31,14 @@ export default class Scaletta extends Component {
     }//getPart
 
     render(){
-        const keys = Object.keys(this.props.route.params.element);
-        let difference = keys.filter(x => !part.includes(x));
-        difference = difference.filter(x => x !== "id" && x !== "name")
+        var temp = this.props.route.params.element;
+        var keys = Object.keys(temp);
+        keys = keys.filter(x => x !== "id" && x !== "name");
+        keys = keys.sort((a,b) => (temp[a].id > temp[b].id) ? 1 : ((temp[b].id > temp[a].id) ? -1 : 0));
         return(
             <ScrollView>
                 {
-                    part.map(item => {
-                        return this.getPart(item);
-                    })
-                }
-                {
-                    difference.map(item => {
+                    keys.map(item => {
                         return this.getPart(item);
                     })
                 }
