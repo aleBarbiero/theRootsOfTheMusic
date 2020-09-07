@@ -160,8 +160,11 @@ export default class ElementProvider extends Component {
         let toAdd = {};
         toAdd.name = name;
         toAdd.id = name.replace(/ /g,'').replace(/\//g, '-').toLowerCase();
-        lineup.map(item => {
-            toAdd[item.id.toLowerCase()] = item.value;
+        lineup.map((item,index) => {
+            toAdd[item.id.toLowerCase()] = {
+                song: item.value,
+                id: index
+            }
         })
         dbh.collection("lineup").doc(toAdd.id).set(toAdd);
         this.getData();

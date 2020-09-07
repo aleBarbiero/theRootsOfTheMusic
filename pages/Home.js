@@ -3,21 +3,7 @@ import { Button, View, TouchableHighlight, Image,Text,ScrollView} from 'react-na
 import {StyleSheet} from 'react-native';
 import '@expo/match-media';
 import {useMediaQuery} from 'react-responsive';
-import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-action = (navigation) => {
-    return(
-        <ActionButton buttonColor="rgba(34, 34, 34, 1)" offsetY={0}>
-            <ActionButton.Item buttonColor='#ff8a01' title="Nuova canzone" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: true})}>
-                <Icon name="md-musical-note" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-            <ActionButton.Item buttonColor='#ff8a01' title="Nuova scaletta" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: false})}>
-                <Icon name="md-list" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-        </ActionButton>        
-    )
-}
+import {Icon} from 'react-native-elements';
 
 function Home({navigation}){
 
@@ -40,78 +26,99 @@ function Home({navigation}){
 
     if(isSmall){
         return (
-            <View style={styles.view}>
-                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.6}], margin: -20}}></Image>
+            <ScrollView>
+                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.6}], margin: -20,alignSelf: "center"}}></Image>
+                <View style={{flexDirection:"row",marginTop:-65,marginBottom:30,alignSelf:"center",padding:0}}>
+                    <Icon reverse name="ios-musical-notes" type="ionicon" color="#222" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: true})}></Icon>
+                    <View style={{width:20}}></View>
+                    <Icon reverse name="ios-list" type="ionicon" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: false})}></Icon>
+                </View>
                 <TouchableHighlight style={{
                             width:200,
                             marginTop: -10,
+                            alignSelf: "center"
                         }}>
                     <Button title="Scalette" color="#ff8a01" onPress={() => navigation.navigate("Scalette",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 200,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Button title="Canzoni" color="#ff8a01" onPress={() => navigation.navigate("Canzoni",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 200,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Button title="Categorie" color="#ff8a01" onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})}></Button>
                 </TouchableHighlight>
-                {this.action(navigation)}
-            </View>
+            </ScrollView>
         );
     }else if(isMedium){
         return (
-            <View style={styles.view}>
-                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.8}],margin: 10}}></Image>
+            <ScrollView>
+                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 0.8}],margin: 10,alignSelf: "center"}}></Image>
+                <View style={{flexDirection:"row",marginTop:-65,marginBottom:30,alignSelf:"center",padding:0}}>
+                    <Icon reverse name="ios-musical-notes" type="ionicon" color="#222" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: true})}></Icon>
+                    <View style={{width:20}}></View>
+                    <Icon reverse name="ios-list" type="ionicon" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: false})}></Icon>
+                </View>
                 <TouchableHighlight style={{
                             width:300,
                             marginTop: -20,
+                            alignSelf: "center"
                         }}>
                     <Text onPress={() => navigation.navigate("Scalette",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.mediumText}>Scalette</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 300,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Text onPress={() => {navigation.navigate("Canzoni",{navigation: navigation,isSmartphone: isSmartphone})}} style={styles.mediumText}>Canzoni</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 300,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Text onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.mediumText}>Categorie</Text>
                 </TouchableHighlight>
-                {this.action()}
-            </View>
+            </ScrollView>
         )
     }else{
         return (
-            <View style={styles.view}>
-                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 1.2}],margin: 150}}></Image>
+            <ScrollView>
+                <Image source={require('../assets/logo.png')} style={{transform: [{scale: 1.2}],margin: 150,alignSelf: "center"}}></Image>
+                <View style={{flexDirection:"row",marginTop:-65,marginBottom:30,alignSelf:"center",padding:0}}>
+                    <Icon reverse name="ios-musical-notes" type="ionicon" color="#222" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: true})}></Icon>
+                    <View style={{width:20}}></View>
+                    <Icon reverse name="ios-list" type="ionicon" onPress={() => navigation.navigate("Forms",{navigation: navigation,type: false})}></Icon>
+                </View>
                 <TouchableHighlight style={{
                             width:400,
                             marginTop: -50,
+                            alignSelf: "center"
                         }}>
                     <Text onPress={() => navigation.navigate("Scalette",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.tabletText}>Scalette</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 400,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Text onPress={() => {navigation.navigate("Canzoni",{navigation: navigation,isSmartphone: isSmartphone})}} style={styles.tabletText}>Canzoni</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={{
                     width: 400,
-                    marginTop: 25
+                    marginTop: 25,
+                    alignSelf: "center"
                 }}>
                     <Text onPress={() => navigation.navigate("Categorie",{navigation: navigation,isSmartphone: isSmartphone})} style={styles.tabletText}>Categorie</Text>
                 </TouchableHighlight>
-                {this.action()}
-            </View>
+            </ScrollView>
         )
     }
 }

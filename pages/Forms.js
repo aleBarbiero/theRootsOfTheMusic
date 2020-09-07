@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import Textarea from 'react-native-textarea';
 import Accordion from 'react-native-collapsible/Accordion';
 
-var parts = ["inizio","alleluia","offertorio","santo","comunione","fine"];
+var parts = [];
 
 export default class Forms extends Component {
 
@@ -141,6 +141,8 @@ export default class Forms extends Component {
         let error = false;
         if(this.state.name === "")
             error = true;
+        if(parts.length === 0)
+            error = true;
         let lineup = parts.map(part => {
             if(this.state[part] === "...")
                 error=true;
@@ -152,6 +154,7 @@ export default class Forms extends Component {
         if(!error){
             addLineup(this.state.name,lineup);
             this.props.navigation.navigate("Home");
+            this.setState({parts: [],sections: []});
         }
     }//addLineup
 
@@ -221,6 +224,15 @@ export default class Forms extends Component {
                         alignSelf: "center"
                     }}>
                         <Button title="Crea nuova scaletta" color="#ff8a01" onPress={() => {this.addLineup()}}>
+                        </Button>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={{
+                        width: 200,
+                        margin: 10,
+                        backgroundColor: "#ff5233",
+                        alignSelf: "center"
+                    }}>
+                        <Button title="Annulla" color="#ff5233" onPress={() => {this.setState({parts: [],sections: []})}}>
                         </Button>
                     </TouchableHighlight>
                 </ScrollView>
